@@ -43,6 +43,8 @@ class PostMessage:
           "location": self.parse_location,
           "link"    : self.parse_link,
         }[self.msgType]()
+
+        #self.get
        
     #<xml>
     #<ToUserName><![CDATA[toUser]]></ToUserName>
@@ -126,6 +128,6 @@ class PostMessage:
         self.description=self.xml.find("Description").text
         self.url=self.xml.find("Url").text
 
-    def reply_text(self,content):    
-        return self.render.reply_text(self.fromUser,self.toUser,int(time.time()),content)
+    def reply_text(self,content):
+        return self.render.reply_text(self.fromUser,self.toUser,int(time.time()), content)
         

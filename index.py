@@ -10,4 +10,5 @@ urls = (
 app = web.application(urls, globals())
 #application = sae.create_wsgi_app(app)
 if __name__ == "__main__":
-    app.run()
+    from myLog import Log
+    app.run(Log)
