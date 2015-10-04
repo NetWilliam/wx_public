@@ -5,6 +5,7 @@ import lxml
 import time
 import os
 import urllib2,json
+import logging
 from lxml import etree
 import pylibmc
 from common import templates_root
@@ -12,7 +13,7 @@ from message import GetMessage,PostMessage
 from module import music
 
 class Weixin:
-    def __init__(self, ):
+    def __init__(self):
         self.logger = web.ctx.environ['wsgilog.logger']
     def GET(self):
         #获取输入参数
