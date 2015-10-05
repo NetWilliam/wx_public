@@ -25,6 +25,7 @@ class Weixin:
     def POST(self):
         str_xml = web.data() #获得post来的数据
         msg = PostMessage(str_xml)
+        self.logger.info(msg.getLogInfo())
         if msg.msgType == "text":
             if msg.content == u"音乐":
                 music_obj = music.musicModule()

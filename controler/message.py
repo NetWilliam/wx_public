@@ -44,7 +44,14 @@ class PostMessage:
           "link"    : self.parse_link,
         }[self.msgType]()
 
-        #self.get
+        self.getLogInfo = {
+          'text'      : self.log_text,
+          'image'     : self.log_image,
+          'voice'     : self.log_voice,
+          'video'     : self.log_video,
+          'location'  : self.log_location,
+          'link'      : self.log_link,
+        }[self.msgType]
        
     #<xml>
     #<ToUserName><![CDATA[toUser]]></ToUserName>
@@ -56,6 +63,10 @@ class PostMessage:
     #</xml>   
     def parse_text(self):
         self.content=self.xml.find("Content").text
+    def log_text(self):
+        log_info = ("MsgType:%s,FromUserName:%s,ToUserName:%s,Content=[%s]" % 
+                    (self.msgType, self.fromUser, self.toUser, self.content))
+        return log_info
   
     #<xml>
     #<ToUserName><![CDATA[toUser]]></ToUserName>
@@ -69,6 +80,11 @@ class PostMessage:
     def parse_image(self):
         self.picUrl=self.xml.find("PicUrl").text
         self.mediaId=self.xml.find("MediaId").text
+    def log_image(self):
+        log_info = ("MsgType:%s,FromUserName:%s,ToUserName:%s,PicUrl=[%s],MediaId=[%s]" % 
+                    (self.msgType, self.fromUser, self.toUser, self.picUrl, self.mediaId))
+        return log_info
+
     
     #<xml>
     #<ToUserName><![CDATA[toUser]]></ToUserName>
@@ -82,6 +98,11 @@ class PostMessage:
     def parse_voice(self):
         self.format=self.xml.find("Format").text
         self.mediaId=self.xml.find("MediaId").text
+    def log_voice(self):
+        log_info = ("MsgType:%s,FromUserName:%s,ToUserName:%s,Format=[%s],MediaId=[%s]" % 
+                    (self.msgType, self.fromUser, self.toUser, self.format, self.mediaId))
+        return log_info
+
     
     #<xml>
     #<ToUserName><![CDATA[toUser]]></ToUserName>
@@ -95,6 +116,11 @@ class PostMessage:
     def parse_video(self):
         self.thumbMediaId=self.xml.find("ThumbMediaId").text
         self.mediaId=self.xml.find("MediaId").text
+    def log_video(self):
+        log_info = ("MsgType:%s,FromUserName:%s,ToUserName:%s,ThumbMediaId=[%s],MediaId=[%s]" % 
+                    (self.msgType, self.fromUser, self.toUser, self.thumbMediaId, self.mediaId))
+        return log_info
+
     
     #<xml>
     #<ToUserName><![CDATA[toUser]]></ToUserName>
@@ -112,6 +138,10 @@ class PostMessage:
         self.location_Y=self.xml.find("Location_Y").text   
         self.scale=self.xml.find("Scale").text   
         self.label=self.xml.find("Label").text   
+    def log_location(self):
+        log_info = ("MsgType:%s,FromUserName:%s,ToUserName:%s,Location_X=[%s],Location_Y=[%s],Scale=[%s],Lable=[%s]" % 
+                    (self.msgType, self.fromUser, self.toUser, self.location_X, self.location_Y, self.scale, self.label))
+        return log_info
     
     #<xml>
     #<ToUserName><![CDATA[toUser]]></ToUserName>
@@ -127,6 +157,13 @@ class PostMessage:
         self.title=self.xml.find("Title").text
         self.description=self.xml.find("Description").text
         self.url=self.xml.find("Url").text
+    def log_link(self):
+        log_info = ("MsgType:%s,FromUserName:%s,ToUserName:%s,Title=[%s],Description=[%s],Url=[%s]" % 
+                    (self.msgType, self.fromUser, self.toUser, self.title, self.description, self.url))
+        return log_info
+
+
+
 
     def reply_text(self,content):
         return self.render.reply_text(self.fromUser,self.toUser,int(time.time()), content)
